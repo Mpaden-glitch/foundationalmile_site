@@ -1,0 +1,94 @@
+---
+/**
+ * Foundational Mile LLC — Our Work
+ * Astro + Tailwind CSS. Deploy to Cloudflare Pages.
+ */
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Our Work — Foundational Mile LLC. Real stories from organizations we've helped get the foundations right." />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+    <title>Our Work — Foundational Mile LLC</title>
+    <style is:global>
+      html { scroll-behavior: smooth; }
+    </style>
+  </head>
+  <body class="bg-slate-950 text-slate-100 font-sans antialiased">
+    <!-- Geometric background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-accent/5 blur-3xl"></div>
+      <div class="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full bg-slate-700/10 blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-slate-700/20 rounded-full"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-slate-600/15 rounded-full"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-accent/10 rounded-full"></div>
+      <svg class="absolute top-20 right-20 w-64 h-64 text-slate-800/40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 50 L50 10 L90 50 L50 90 Z" stroke="currentColor" stroke-width="0.5" fill="none" />
+        <path d="M25 50 L50 25 L75 50 L50 75 Z" stroke="currentColor" stroke-width="0.5" fill="none" />
+      </svg>
+      <svg class="absolute bottom-32 left-16 w-48 h-48 text-slate-800/30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="0.5" />
+        <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="0.5" />
+      </svg>
+    </div>
+
+    <header class="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-sm sticky top-0 z-50">
+      <nav class="max-w-5xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <a href="/" class="text-lg font-semibold text-slate-100 hover:text-accent transition-colors">Foundational Mile LLC</a>
+        <div class="flex flex-wrap items-center gap-6 text-sm">
+          <a href="/#services" class="text-slate-400 hover:text-slate-100 transition-colors">Services</a>
+          <a href="/#about" class="text-slate-400 hover:text-slate-100 transition-colors">About</a>
+          <a href="/case-studies" class="text-slate-100 font-medium transition-colors">Our Work</a>
+          <a href="/#contact" class="text-accent font-medium hover:text-accent-light transition-colors">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="min-h-[60vh] flex flex-col justify-center px-6 py-20 md:py-28">
+        <div class="max-w-4xl mx-auto">
+          <p class="text-accent font-mono text-sm uppercase tracking-widest mb-4">Our Work</p>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-50 leading-tight mb-6">
+            Real work. Real results.
+          </h1>
+          <p class="text-xl text-slate-400 max-w-2xl">
+            Stories from the organizations we've helped get the foundations right.
+          </p>
+        </div>
+      </section>
+
+      <section class="px-6 pb-28 border-t border-slate-800/50">
+        <div class="max-w-4xl mx-auto pt-20">
+          <!-- Placeholder state -->
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-12 md:p-16 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
+              <span class="text-accent font-mono text-2xl">✦</span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-100 mb-4">We're just getting started.</h2>
+            <p class="text-slate-400 text-lg max-w-xl mx-auto mb-8">
+              We prefer to let the work speak for itself — and right now, we're busy doing it. Check back soon for the stories.
+            </p>
+            <a
+              href="/#contact"
+              class="inline-block px-8 py-4 bg-accent text-slate-950 font-semibold rounded-lg hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-slate-950 transition-colors"
+            >
+              Start the conversation
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-slate-800/50 px-6 py-8">
+      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+        <span>© {new Date().getFullYear()} Foundational Mile LLC</span>
+        <a href="/" class="text-slate-400 hover:text-slate-100 transition-colors">Back to home</a>
+      </div>
+    </footer>
+  </body>
+</html>
