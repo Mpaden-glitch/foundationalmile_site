@@ -4,6 +4,6 @@ import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   integrations: [tailwind()],
-  output: 'hybrid',
+  output: 'server',
   adapter: cloudflare(),
 });
