@@ -1,0 +1,209 @@
+---
+/**
+ * Foundational Mile LLC — About
+ * Astro + Tailwind CSS. Deploy to Cloudflare Pages.
+ */
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="About Foundational Mile LLC — a mission-aligned technology consultancy built on a simple conviction: the right technology for your organization starts with understanding your mission, not your tools." />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+    <title>About — Foundational Mile LLC</title>
+    <style is:global>
+      html { scroll-behavior: smooth; }
+    </style>
+  </head>
+  <body class="bg-slate-950 text-slate-100 font-sans antialiased">
+
+    <!-- Geometric background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-accent/5 blur-3xl"></div>
+      <div class="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full bg-slate-700/10 blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-slate-700/20 rounded-full"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-slate-600/15 rounded-full"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-accent/10 rounded-full"></div>
+      <svg class="absolute top-20 right-20 w-64 h-64 text-slate-800/40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 50 L50 10 L90 50 L50 90 Z" stroke="currentColor" stroke-width="0.5" fill="none" />
+        <path d="M25 50 L50 25 L75 50 L50 75 Z" stroke="currentColor" stroke-width="0.5" fill="none" />
+      </svg>
+      <svg class="absolute bottom-32 left-16 w-48 h-48 text-slate-800/30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="0.5" />
+        <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="0.5" />
+      </svg>
+    </div>
+
+    <header class="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-sm sticky top-0 z-50">
+      <nav class="max-w-5xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+        <a href="/" class="text-lg font-semibold text-slate-100 hover:text-accent transition-colors">Foundational Mile LLC</a>
+        <div class="flex flex-wrap items-center gap-6 text-sm">
+          <a href="/services" class="text-slate-400 hover:text-slate-100 transition-colors">Services</a>
+          <a href="/about" class="text-slate-100 font-medium transition-colors">About</a>
+          <a href="/case-studies" class="text-slate-400 hover:text-slate-100 transition-colors">Our Work</a>
+          <a href="/website-strategy-catalog" class="text-slate-400 hover:text-slate-100 transition-colors">Website Strategy</a>
+          <a href="/contact" class="text-accent font-medium hover:text-accent-light transition-colors">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- Page Header -->
+      <section class="min-h-[50vh] flex flex-col justify-center px-6 py-20 md:py-28">
+        <div class="max-w-4xl mx-auto">
+          <p class="text-accent font-mono text-sm uppercase tracking-widest mb-4">About</p>
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-50 leading-tight mb-6">
+            Why this practice exists
+          </h1>
+          <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+            A specific problem, a specific conviction, and a practice built to address it directly.
+          </p>
+        </div>
+      </section>
+
+      <!-- Narrative Content -->
+      <section class="px-6 pb-28 border-t border-slate-800/50">
+        <div class="max-w-3xl mx-auto pt-20 space-y-20">
+
+          <!-- The story -->
+          <div>
+            <p class="text-accent font-mono text-sm uppercase tracking-widest mb-4">The Story</p>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-6">I have spent years helping organizations build the wrong things</h2>
+            <div class="space-y-5 text-slate-300 leading-relaxed">
+              <p>
+                Not intentionally. The work was technically sound. The code ran. The platforms launched. But I kept watching the same pattern play out: teams would invest heavily in a system, tool, or website — and then slowly realize it did not actually serve the people it was built for, or the mission it was supposed to advance.
+              </p>
+              <p>
+                I built on top of SRE and product work — founding reliability functions from scratch, leading discovery-to-delivery product cycles, sitting across from stakeholders at every level to understand what they needed before requirements were written. That background gave me a particular lens: the organizations that move fastest and waste the least are not the ones with the best technology. They are the ones who know who they are serving, what problem they are actually solving, and what they can confidently skip.
+              </p>
+              <p>
+                The more I worked with ministries, nonprofits, and mission-driven organizations, the more I saw a specific gap. These organizations have real missions and limited bandwidth. They need partners who will think carefully about alignment — not vendors who will build whatever gets specified and move on.
+              </p>
+              <p>
+                That is the gap Foundational Mile is built to fill.
+              </p>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-800/50"></div>
+
+          <!-- The conviction -->
+          <div>
+            <p class="text-accent font-mono text-sm uppercase tracking-widest mb-4">The Conviction</p>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-6">Technology should serve your mission. Not the other way around.</h2>
+            <div class="space-y-5 text-slate-300 leading-relaxed">
+              <p>
+                The most common and most expensive mistake in technology is moving too fast from problem to solution. Organizations buy tools they do not fully understand, build systems they did not actually need, and hire vendors who are happy to implement whatever gets specified — whether or not it is the right thing to build.
+              </p>
+              <p>
+                Foundational Mile takes a different position. The most valuable thing a technical partner can do is help you understand the problem clearly before recommending anything. That means asking uncomfortable questions, challenging assumptions, and sometimes telling a client that what they think they need is not what they actually need.
+              </p>
+              <p>
+                This is not about slowing things down. It is about making sure what gets built is worth building — and that the people who depend on it can use and maintain it long after the engagement ends.
+              </p>
+            </div>
+
+            <!-- Three principles -->
+            <div class="grid sm:grid-cols-3 gap-4 mt-10">
+              <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+                <p class="text-accent font-mono text-xs uppercase tracking-widest mb-2">01</p>
+                <p class="text-sm font-semibold text-slate-100 mb-1.5">Clarity before complexity</p>
+                <p class="text-sm text-slate-500 leading-relaxed">Understand the problem well before proposing a solution. Most problems are simpler than they appear once the right questions get asked.</p>
+              </div>
+              <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+                <p class="text-accent font-mono text-xs uppercase tracking-widest mb-2">02</p>
+                <p class="text-sm font-semibold text-slate-100 mb-1.5">Mission before implementation</p>
+                <p class="text-sm text-slate-500 leading-relaxed">Know who you are serving and why before choosing a platform or writing a line of code. The mission is the north star.</p>
+              </div>
+              <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+                <p class="text-accent font-mono text-xs uppercase tracking-widest mb-2">03</p>
+                <p class="text-sm font-semibold text-slate-100 mb-1.5">Enablement over dependency</p>
+                <p class="text-sm text-slate-500 leading-relaxed">Every engagement should end with your team better equipped than when it started — not reliant on ongoing support to function.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-800/50"></div>
+
+          <!-- The practice -->
+          <div>
+            <p class="text-accent font-mono text-sm uppercase tracking-widest mb-4">The Practice</p>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-6">A direct, honest, single-person practice</h2>
+            <div class="space-y-5 text-slate-300 leading-relaxed">
+              <p>
+                Foundational Mile is a solo consultancy. There is no team of developers behind the scenes, no account managers, no offshore contractors. When you work with Foundational Mile, you work directly with one person who has been doing this work for a long time and takes full responsibility for what gets delivered.
+              </p>
+              <p>
+                That model is intentional. The organizations that benefit most from this kind of work need direct access to the person thinking through their problems — not a filtered relationship through project management layers. Ministries, nonprofits, and mission-driven organizations deserve the same quality of thinking that larger organizations get from expensive firms, without the overhead and misaligned incentives that come with them.
+              </p>
+              <p>
+                If it is a fit, you will know quickly. And if it is not, I will tell you that honestly too.
+              </p>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-800/50"></div>
+
+          <!-- Experience anchors -->
+          <div>
+            <p class="text-accent font-mono text-sm uppercase tracking-widest mb-4">Experience</p>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-8">Where the perspective comes from</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+                <p class="text-sm font-semibold text-slate-100 mb-1.5">SRE and reliability leadership</p>
+                <p class="text-sm text-slate-500 leading-relaxed">Founded SRE functions from scratch. Built the operational foundations that engineering teams depend on — and learned what breaks when those foundations are skipped.</p>
+              </div>
+              <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+                <p class="text-sm font-semibold text-slate-100 mb-1.5">Product and discovery work</p>
+                <p class="text-sm text-slate-500 leading-relaxed">Led discovery-to-delivery product cycles. Learned that the difference between a good product and a wasted investment is almost always what happened — or didn't happen — before anything was built.</p>
+              </div>
+              <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+                <p class="text-sm font-semibold text-slate-100 mb-1.5">Direct stakeholder engagement</p>
+                <p class="text-sm text-slate-500 leading-relaxed">Sat across from executives, leaders, and frontline teams to understand what was actually needed before requirements were written. That habit does not turn off.</p>
+              </div>
+              <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+                <p class="text-sm font-semibold text-slate-100 mb-1.5">Mission-driven work</p>
+                <p class="text-sm text-slate-500 leading-relaxed">Drawn to organizations where the work matters beyond the bottom line. Churches, nonprofits, schools, and community organizations — places where technology decisions carry real weight.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="px-6 py-20 md:py-28 border-t border-slate-800/50">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-slate-50 mb-5">Sound like a fit?</h2>
+          <p class="text-slate-400 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+            There is no pitch deck, no sales process, and no obligation. Just a conversation to figure out whether and how we can help.
+          </p>
+          <a
+            href="/contact"
+            class="inline-block px-8 py-4 bg-accent text-slate-950 font-semibold rounded-lg hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-slate-950 transition-colors"
+          >
+            Book a Clarity Call
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="border-t border-slate-800/50 px-6 py-8">
+      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+        <span>© {new Date().getFullYear()} Foundational Mile LLC</span>
+        <div class="flex items-center gap-6">
+          <a href="/services" class="text-slate-400 hover:text-slate-100 transition-colors">Services</a>
+          <a href="/about" class="text-slate-400 hover:text-slate-100 transition-colors">About</a>
+          <a href="/contact" class="text-slate-400 hover:text-slate-100 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
