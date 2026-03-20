@@ -1,0 +1,29 @@
+version: 2
+updates:
+  # Keep npm dependencies up to date
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      # Group all Astro-related updates into one PR
+      astro:
+        patterns:
+          - 'astro'
+          - '@astrojs/*'
+      # Group all dev tooling (ESLint, TypeScript) into one PR
+      dev-tooling:
+        patterns:
+          - 'eslint*'
+          - '@typescript-eslint/*'
+          - 'typescript'
+
+  # Keep GitHub Actions up to date
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
