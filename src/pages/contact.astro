@@ -3,6 +3,7 @@
  * Foundational Mile LLC — Contact
  * Astro + Tailwind CSS. Deploy to Cloudflare Pages.
  */
+export const prerender = true;
 ---
 <!doctype html>
 <html lang="en">
@@ -17,6 +18,19 @@
     <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <title>Contact — Foundational Mile LLC</title>
     <link rel="canonical" href="https://foundationalmile.com/contact" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Contact — Foundational Mile LLC" />
+    <meta property="og:description" content="Get in touch with Foundational Mile LLC. Tell us what you're working on and we'll help figure out where to start." />
+    <meta property="og:url" content="https://foundationalmile.com/contact" />
+    <meta property="og:type" content="website" />
+    <script is:inline type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Foundational Mile LLC",
+        "url": "https://foundationalmile.com"
+      }
+    </script>
     <style is:global>
       html { scroll-behavior: smooth; }
     </style>

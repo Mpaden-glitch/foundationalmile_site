@@ -3,6 +3,7 @@
  * Foundational Mile LLC — Homepage
  * Astro + Tailwind CSS. Deploy to Cloudflare Pages.
  */
+export const prerender = true;
 ---
 <!doctype html>
 <html lang="en">
@@ -16,6 +17,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
     <title>Foundational Mile LLC — Mission-Aligned Technology Consulting</title>
     <link rel="canonical" href="https://foundationalmile.com/" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Foundational Mile LLC — Mission-Aligned Technology Consulting" />
+    <meta property="og:description" content="Foundational Mile LLC helps ministries, nonprofits, and mission-driven organizations realign their technology, processes, and decisions with their mission and the people they exist to serve." />
+    <meta property="og:url" content="https://foundationalmile.com/" />
+    <meta property="og:type" content="website" />
+    <script is:inline type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Foundational Mile LLC",
+        "url": "https://foundationalmile.com"
+      }
+    </script>
     <style is:global>
       html { scroll-behavior: smooth; }
     </style>
