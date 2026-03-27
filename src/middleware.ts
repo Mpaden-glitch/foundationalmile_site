@@ -4,7 +4,14 @@ import { defineMiddleware } from 'astro:middleware';
  * Security headers middleware.
  * Applied to all HTML responses only — skips static assets (JS, CSS, images).
  */
-export const onRequest = defineMiddleware(async (_context, next) => {
+export const onRequest = defineMiddleware(async (context, next) => {
+  // Normalize legacy index.html paths to canonical route paths.
+  const url = new URL(context.request.url);
+  if (url.pathname.endsWith('/index.html')) {
+    const normalizedPath = url.pathname.replace(/index\.html$/, '') || '/';
+    return Response.redirect(`${url.origin}${normalizedPath}${url.search}`, 301);
+  }
+
   const response = await next();
 
   // Only apply headers to HTML responses

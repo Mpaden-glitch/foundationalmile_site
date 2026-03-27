@@ -7,7 +7,8 @@
     "build": "astro build && echo '_worker.js' > dist/.assetsignore",
     "preview": "astro preview",
     "lint": "eslint src",
-    "check": "astro check"
+    "check": "astro check",
+    "check:sitemap": "node scripts/validate-sitemap.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",
@@ -25,6 +26,19 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
-    "undici": "^7.24.0"
+    "undici": "^7.24.0",
+    "picomatch": "^4.0.4",
+    "anymatch": {
+      "picomatch": "^2.3.2"
+    },
+    "micromatch": {
+      "picomatch": "^2.3.2"
+    },
+    "readdirp": {
+      "picomatch": "^2.3.2"
+    },
+    "h3": "^1.15.9",
+    "smol-toml": "^1.6.1",
+    "yaml": "^2.8.3"
   }
 }
