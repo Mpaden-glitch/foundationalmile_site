@@ -25,7 +25,8 @@ jobs:
         run: npm ci
 
       - name: Run npm audit
-        # Fail on high or critical severity vulnerabilities
+        # Policy: high/critical must be zero in CI.
+        # Moderate findings are tracked and remediated on the dependency update cadence.
         run: npm audit --audit-level=high
 
   dependency-review:

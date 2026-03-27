@@ -27,6 +27,11 @@ Before deploys, validate that `public/sitemap.xml` still matches `src/pages`:
 npm run check:sitemap
 ```
 
+## Security checks
+
+- CI fails on `npm audit --audit-level=high` (high/critical must be zero).
+- Moderate vulnerabilities are tracked and remediated during regular dependency updates unless policy changes.
+
 ## Deploy to Cloudflare Pages (GitHub → auto deploy)
 
 **1. Push the project to GitHub**
