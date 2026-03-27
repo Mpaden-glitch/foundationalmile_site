@@ -19,6 +19,14 @@ npm run build
 
 Output is in `dist/`. Deploy that folder to Cloudflare Pages (connect the repo or upload the `dist` directory).
 
+## SEO checks
+
+Before deploys, validate that `public/sitemap.xml` still matches `src/pages`:
+
+```bash
+npm run check:sitemap
+```
+
 ## Deploy to Cloudflare Pages (GitHub → auto deploy)
 
 **1. Push the project to GitHub**
