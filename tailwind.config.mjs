@@ -4,10 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
+        brand: {
+          navy: '#041638',
+          gold: '#FF8703',
+        },
         accent: {
-          DEFAULT: '#f59e0b',
-          light: '#fbbf24',
-          dark: '#d97706',
+          DEFAULT: '#FF8703',
+          light: '#FF9F33',
+          dark: '#CC6C02',
         },
       },
       fontFamily: {

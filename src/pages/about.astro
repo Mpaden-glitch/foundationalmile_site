@@ -11,7 +11,14 @@ export const prerender = true;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="About Foundational Mile LLC — a mission-aligned technology consultancy built on a simple conviction: the right technology for your organization starts with understanding your mission, not your tools." />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#041638" />
+    <link rel="icon" href="/icons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/icons/site.webmanifest" />
+    <link rel="preload" as="image" href="/brand/logo-inverse.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
@@ -34,7 +41,7 @@ export const prerender = true;
       html { scroll-behavior: smooth; }
     </style>
   </head>
-  <body class="bg-slate-950 text-slate-100 font-sans antialiased">
+  <body class="bg-brand-navy text-slate-100 font-sans antialiased">
 
     <!-- Geometric background -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -53,14 +60,14 @@ export const prerender = true;
       </svg>
     </div>
 
-    <header class="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-sm sticky top-0 z-50">
+    <header class="border-b border-slate-800/50 bg-brand-navy/80 backdrop-blur-sm sticky top-0 z-50">
       <nav class="max-w-5xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <a href="/" class="text-lg font-semibold text-slate-100 hover:text-accent transition-colors">Foundational Mile LLC</a>
+        <a href="/" class="inline-flex items-center gap-3 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-brand-navy" aria-label="Foundational Mile LLC home"><img src="/brand/logo-inverse.png" alt="Foundational Mile LLC logo" class="h-8 w-auto sm:h-9" loading="eager" decoding="sync" width="146" height="141" /><span class="text-base sm:text-lg font-semibold text-slate-100">Foundational Mile LLC</span></a>
         <div class="flex flex-wrap items-center gap-6 text-sm">
-          <a href="/services" class="text-slate-400 hover:text-slate-100 transition-colors">Services</a>
+          <a href="/services" class="text-slate-400 font-medium hover:text-slate-100 transition-colors">Services</a>
           <a href="/about" class="text-slate-100 font-medium transition-colors">About</a>
-          <a href="/case-studies" class="text-slate-400 hover:text-slate-100 transition-colors">Our Work</a>
-          <a href="/website-strategy-catalog" class="text-slate-400 hover:text-slate-100 transition-colors">Website Strategy</a>
+          <a href="/case-studies" class="text-slate-400 font-medium hover:text-slate-100 transition-colors">Our Work</a>
+          <a href="/website-strategy-catalog" class="text-slate-400 font-medium hover:text-slate-100 transition-colors">Website Strategy</a>
           <a href="/contact" class="text-accent font-medium hover:text-accent-light transition-colors">Contact</a>
         </div>
       </nav>
@@ -200,7 +207,7 @@ export const prerender = true;
           </p>
           <a
             href="/contact"
-            class="inline-block px-8 py-4 bg-accent text-slate-950 font-semibold rounded-lg hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-slate-950 transition-colors"
+            class="inline-block px-8 py-4 bg-accent text-brand-navy font-semibold rounded-lg hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-brand-navy transition-colors"
           >
             Book a Clarity Call
           </a>
@@ -211,12 +218,12 @@ export const prerender = true;
 
     <footer class="border-t border-slate-800/50 px-6 py-8">
       <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-        <span>© {new Date().getFullYear()} Foundational Mile LLC</span>
+        <div class="flex items-center gap-3"><span class="inline-flex items-center justify-center rounded-full bg-white/90 p-1 ring-1 ring-slate-300/30"><img src="/brand/logo-primary.png" alt="Foundational Mile LLC logo" class="h-8 w-8" loading="lazy" decoding="async" /></span><span>© {new Date().getFullYear()} Foundational Mile LLC</span></div>
         <div class="flex items-center gap-6">
-          <a href="/services" class="text-slate-400 hover:text-slate-100 transition-colors">Services</a>
-          <a href="/about" class="text-slate-400 hover:text-slate-100 transition-colors">About</a>
-          <a href="/case-studies" class="text-slate-400 hover:text-slate-100 transition-colors">Our Work</a>
-          <a href="/contact" class="text-slate-400 hover:text-slate-100 transition-colors">Contact</a>
+          <a href="/services" class="text-slate-400 font-medium hover:text-slate-100 transition-colors">Services</a>
+          <a href="/about" class="text-slate-400 font-medium hover:text-slate-100 transition-colors">About</a>
+          <a href="/case-studies" class="text-slate-400 font-medium hover:text-slate-100 transition-colors">Our Work</a>
+          <a href="/contact" class="text-slate-400 font-medium hover:text-slate-100 transition-colors">Contact</a>
         </div>
       </div>
     </footer>
