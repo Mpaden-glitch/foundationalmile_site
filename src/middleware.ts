@@ -8,7 +8,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // Normalize legacy index.html paths to canonical route paths.
   const url = new URL(context.request.url);
   if (url.pathname.endsWith('/index.html')) {
-    const normalizedPath = url.pathname.replace(/index\.html$/, '') || '/';
+    const normalizedPath = url.pathname.replace(/\/index\.html$/, '') || '/';
     return Response.redirect(`${url.origin}${normalizedPath}${url.search}`, 301);
   }
 
