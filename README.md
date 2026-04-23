@@ -21,7 +21,9 @@ Set these in Cloudflare for deployed environments, and in `.dev.vars` for local 
 
 - `TURNSTILE_SECRET_KEY`
 - `PUBLIC_TURNSTILE_SITE_KEY`
-- `WEB3FORMS_ACCESS_KEY`
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+- `CONTACT_TO_EMAIL`
 - `CF_ACCESS_TEAM_NAME`
 - `CF_ACCESS_AUD`
 - `DEV_PORTAL_EMAIL` (optional, localhost-only dev bypass)
@@ -32,6 +34,9 @@ Contact form notes:
 
 - `PUBLIC_TURNSTILE_SITE_KEY` is the browser/site key rendered on the contact page.
 - `TURNSTILE_SECRET_KEY` must be the matching secret for that same Turnstile widget.
+- `RESEND_API_KEY` is your Resend API key (server-side secret).
+- `RESEND_FROM_EMAIL` must be a verified Resend sender identity.
+- `CONTACT_TO_EMAIL` is the inbox that should receive contact submissions.
 
 ## D1 setup
 

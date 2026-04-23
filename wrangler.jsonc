@@ -1,6 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "foundationalmile",
+  "keep_vars": true,
+  "workers_dev": true,
+  "preview_urls": true,
   "compatibility_date": "2025-09-27",
   "observability": {
     "enabled": true
@@ -14,6 +17,18 @@
     "binding": "ASSETS",
     "directory": "dist"
   },
+  "routes": [
+    {
+      "pattern": "foundationalmile.com",
+      "zone_name": "foundationalmile.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.foundationalmile.com",
+      "zone_name": "foundationalmile.com",
+      "custom_domain": true
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
@@ -23,7 +38,8 @@
     }
   ],
   "vars": {
-    "CF_ACCESS_TEAM_NAME": "REPLACE_WITH_CF_ACCESS_TEAM_NAME",
-    "CF_ACCESS_AUD": "REPLACE_WITH_CF_ACCESS_AUD"
+    "CF_ACCESS_AUD": "1a45108cc5695035146297af64331f62c27e476da5103343278b222ca7f70674",
+    "CF_ACCESS_TEAM_NAME": "foundationalmile",
+    "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAACrZpj7N7dorzKW0"
   }
 }

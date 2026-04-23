@@ -20,8 +20,12 @@ interface Env {
   DEV_PORTAL_EMAIL?: string;
   /** Cloudflare Turnstile secret key — used to verify bot challenge tokens server-side */
   TURNSTILE_SECRET_KEY: string;
-  /** Web3Forms access key — kept server-side, never exposed to the browser */
-  WEB3FORMS_ACCESS_KEY: string;
+  /** Resend API key used server-side to deliver contact form messages */
+  RESEND_API_KEY: string;
+  /** Sender identity configured in Resend, e.g. "Foundational Mile <contact@yourdomain.com>" */
+  RESEND_FROM_EMAIL: string;
+  /** Destination inbox for contact form submissions */
+  CONTACT_TO_EMAIL: string;
 }
 
 type Runtime = import('@astrojs/cloudflare').Runtime<Env>;

@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
 
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-const WEB3FORMS_URL = 'https://api.web3forms.com/submit';
+const RESEND_EMAILS_URL = 'https://api.resend.com/emails';
+const CONTACT_SUBJECT = 'New Contact Form Submission — Foundational Mile';
 
 /**
  * Simple in-memory rate limit: max 5 submissions per IP per hour.
@@ -115,37 +116,60 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ success: false, message: 'Bot verification failed. Please try again.' }, 400);
   }
 
-  // Forward to Web3Forms with the access key kept server-side
-  const accessKey = env.WEB3FORMS_ACCESS_KEY;
-  if (!accessKey) {
-    console.error('WEB3FORMS_ACCESS_KEY environment variable is not configured');
+  // Send via Resend
+  const resendApiKey = env.RESEND_API_KEY;
+  const resendFromEmail = env.RESEND_FROM_EMAIL;
+  const contactToEmail = env.CONTACT_TO_EMAIL;
+
+  if (!resendApiKey) {
+    console.error('RESEND_API_KEY environment variable is not configured');
     return json({ success: false, message: 'Server configuration error.' }, 500);
   }
 
-  const formData = new FormData();
-  formData.append('access_key', accessKey);
-  formData.append('subject', 'New Contact Form Submission — Foundational Mile');
-  formData.append('from_name', 'Foundational Mile Website');
-  formData.append('name', name);
-  formData.append('email', email);
-  if (organization) formData.append('organization', organization);
-  formData.append('message', message);
+  if (!resendFromEmail) {
+    console.error('RESEND_FROM_EMAIL environment variable is not configured');
+    return json({ success: false, message: 'Server configuration error.' }, 500);
+  }
+
+  if (!contactToEmail) {
+    console.error('CONTACT_TO_EMAIL environment variable is not configured');
+    return json({ success: false, message: 'Server configuration error.' }, 500);
+  }
+
+  const textBody = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Organization: ${organization || '(not provided)'}`,
+    '',
+    'Message:',
+    message,
+  ].join('\n');
 
   try {
-    const web3Res = await fetch(WEB3FORMS_URL, { method: 'POST', body: formData });
-    if (!web3Res.ok) {
-      console.error('Web3Forms request failed with status:', web3Res.status);
+    const resendRes = await fetch(RESEND_EMAILS_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: resendFromEmail,
+        to: [contactToEmail],
+        subject: CONTACT_SUBJECT,
+        reply_to: email,
+        text: textBody,
+      }),
+    });
+
+    if (!resendRes.ok) {
+      const errorBody = await resendRes.text();
+      console.error('Resend request failed:', resendRes.status, errorBody);
       return json({ success: false, message: 'Failed to send. Please try again or email us directly.' }, 502);
     }
-
-    const web3Data = await web3Res.json() as { success?: unknown };
-    if (web3Data.success === true) {
-      return json({ success: true, message: "Message sent. We'll be in touch soon." }, 200);
-    }
   } catch (error) {
-    console.error('Web3Forms network error:', error);
+    console.error('Resend network error:', error);
     return json({ success: false, message: 'Failed to send. Please try again or email us directly.' }, 502);
   }
 
-  return json({ success: false, message: 'Failed to send. Please try again or email us directly.' }, 502);
+  return json({ success: true, message: "Message sent. We'll be in touch soon." }, 200);
 };
