@@ -1,0 +1,92 @@
+---
+import PortalLayout from '../../../../layouts/PortalLayout.astro';
+import { assertSiteAccess, requirePortalAuth } from '../../../../lib/portal/auth';
+import { listRequestsForSite } from '../../../../lib/portal/db';
+import { getPortalRuntime } from '../../../../lib/portal/runtime';
+import { requireSiteId } from '../../../../lib/portal/validation';
+
+export const prerender = false;
+
+function toPortalErrorResponse(error: unknown): Response {
+  const status =
+    typeof error === 'object' &&
+    error !== null &&
+    'status' in error &&
+    typeof (error as { status?: unknown }).status === 'number'
+      ? (error as { status: number }).status
+      : 500;
+
+  return new Response(status === 401 ? 'Unauthorized.' : status === 403 ? 'Forbidden.' : 'Internal server error.', { status });
+}
+
+let auth!: Awaited<ReturnType<typeof requirePortalAuth>>;
+let siteId = '';
+let role: 'viewer' | 'requester' = 'viewer';
+let requests: Awaited<ReturnType<typeof listRequestsForSite>> = [];
+let authError: unknown = null;
+
+try {
+  const { env, db } = getPortalRuntime(Astro.locals as App.Locals);
+  auth = await requirePortalAuth(Astro.request, env, db);
+  siteId = requireSiteId(Astro.params.site_id);
+  role = assertSiteAccess(siteId, auth);
+  requests = await listRequestsForSite(db, siteId);
+} catch (error) {
+  authError = error;
+}
+
+if (authError) {
+  return toPortalErrorResponse(authError);
+}
+
+const site = auth.authorizedSites.find((candidate) => candidate.id === siteId);
+if (!site) {
+  return new Response('Forbidden.', { status: 403 });
+}
+---
+<PortalLayout title={`${site.displayName} Requests`} userEmail={auth.user.email}>
+  <section class="flex flex-wrap items-start justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-8">
+    <div>
+      <p class="text-sm font-mono text-slate-400 uppercase tracking-wider">Requests</p>
+      <h1 class="text-2xl md:text-3xl font-semibold text-slate-100 mt-2">{site.displayName}</h1>
+      <p class="text-slate-400 mt-2">{site.domain}</p>
+    </div>
+    <div class="flex gap-3">
+      <a
+        href={`/portal/sites/${site.id}`}
+        class="inline-flex items-center px-4 py-2 rounded-md border border-slate-600 text-slate-200 hover:border-slate-400 hover:text-white transition-colors"
+      >
+        Site Home
+      </a>
+      {role === 'requester' ? (
+        <a
+          href={`/portal/sites/${site.id}/requests/new`}
+          class="inline-flex items-center px-4 py-2 rounded-md bg-accent text-brand-navy font-medium hover:bg-accent-light transition-colors"
+        >
+          New Request
+        </a>
+      ) : null}
+    </div>
+  </section>
+
+  <section class="mt-8">
+    {requests.length === 0 ? (
+      <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-8">
+        <p class="text-slate-400">No requests found for this site.</p>
+      </div>
+    ) : (
+      <ul class="grid gap-4">
+        {requests.map((request) => (
+          <li class="rounded-xl border border-slate-800 bg-slate-900/40 p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h2 class="text-lg font-semibold text-slate-100">{request.title}</h2>
+              <span class="text-xs font-mono uppercase tracking-wider text-slate-400">{request.status}</span>
+            </div>
+            <p class="text-slate-300 mt-3 whitespace-pre-line">{request.description}</p>
+            <p class="text-xs text-slate-500 mt-4">Created {new Date(request.createdAt).toLocaleString()}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</PortalLayout>

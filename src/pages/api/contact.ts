@@ -77,7 +77,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   // Validate Turnstile token server-side against Cloudflare's API
-  const { env } = (locals as App.Locals).runtime;
+  const runtime = (locals as App.Locals).runtime;
+  if (!runtime?.env) {
+    console.error('Astro Cloudflare runtime env is not available');
+    return json({ success: false, message: 'Server configuration error.' }, 500);
+  }
+
+  const { env } = runtime;
 
   const turnstileSecret = env.TURNSTILE_SECRET_KEY;
   if (!turnstileSecret) {
@@ -85,14 +91,27 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ success: false, message: 'Server configuration error.' }, 500);
   }
 
-  const turnstileRes = await fetch(TURNSTILE_VERIFY_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ secret: turnstileSecret, response: turnstileToken, remoteip: ip }),
-  });
-  const turnstileData = await turnstileRes.json() as { success: boolean };
+  let turnstileDataSuccess = false;
+  try {
+    const turnstileRes = await fetch(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: turnstileSecret, response: turnstileToken, remoteip: ip }),
+    });
 
-  if (!turnstileData.success) {
+    if (!turnstileRes.ok) {
+      console.error('Turnstile verification request failed:', turnstileRes.status);
+      return json({ success: false, message: 'Verification service is unavailable.' }, 502);
+    }
+
+    const turnstileData = await turnstileRes.json() as { success?: unknown };
+    turnstileDataSuccess = turnstileData.success === true;
+  } catch (error) {
+    console.error('Turnstile verification network error:', error);
+    return json({ success: false, message: 'Verification service is unavailable.' }, 502);
+  }
+
+  if (!turnstileDataSuccess) {
     return json({ success: false, message: 'Bot verification failed. Please try again.' }, 400);
   }
 
@@ -112,11 +131,20 @@ export const POST: APIRoute = async ({ request, locals }) => {
   if (organization) formData.append('organization', organization);
   formData.append('message', message);
 
-  const web3Res = await fetch(WEB3FORMS_URL, { method: 'POST', body: formData });
-  const web3Data = await web3Res.json() as { success: boolean };
+  try {
+    const web3Res = await fetch(WEB3FORMS_URL, { method: 'POST', body: formData });
+    if (!web3Res.ok) {
+      console.error('Web3Forms request failed with status:', web3Res.status);
+      return json({ success: false, message: 'Failed to send. Please try again or email us directly.' }, 502);
+    }
 
-  if (web3Data.success) {
-    return json({ success: true, message: "Message sent. We'll be in touch soon." }, 200);
+    const web3Data = await web3Res.json() as { success?: unknown };
+    if (web3Data.success === true) {
+      return json({ success: true, message: "Message sent. We'll be in touch soon." }, 200);
+    }
+  } catch (error) {
+    console.error('Web3Forms network error:', error);
+    return json({ success: false, message: 'Failed to send. Please try again or email us directly.' }, 502);
   }
 
   return json({ success: false, message: 'Failed to send. Please try again or email us directly.' }, 502);

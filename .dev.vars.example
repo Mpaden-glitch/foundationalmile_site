@@ -1,0 +1,13 @@
+# Existing contact form runtime vars
+TURNSTILE_SECRET_KEY=replace-me
+WEB3FORMS_ACCESS_KEY=replace-me
+
+# Contact form browser key (build-time/public)
+PUBLIC_TURNSTILE_SITE_KEY=replace-me
+
+# Portal auth vars
+CF_ACCESS_TEAM_NAME=replace-with-your-team-name
+CF_ACCESS_AUD=replace-with-your-access-audience
+
+# Local-only portal bypass identity (localhost requests only)
+DEV_PORTAL_EMAIL=portal.requester@example.com

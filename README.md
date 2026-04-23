@@ -1,84 +1,116 @@
-# Foundational Mile LLC — Website
+# Foundational Mile Website + Portal
 
-Single-page static site for Foundational Mile LLC, built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com). Designed for deployment on **Cloudflare Pages** (fully static, no server-side dependencies).
+Astro SSR website for Foundational Mile, deployed to Cloudflare. The public marketing site remains unchanged, and a lean Phase 1 client portal is available under `/portal/*`.
 
-## Run locally
+## Tech stack
+
+- Astro 5 + Tailwind
+- Cloudflare adapter (`output: 'server'`)
+- Cloudflare Access (outer auth)
+- Cloudflare D1 (portal data)
+
+## Install
 
 ```bash
 npm install
+```
+
+## Required environment variables
+
+Set these in Cloudflare for deployed environments, and in `.dev.vars` for local Worker runtime:
+
+- `TURNSTILE_SECRET_KEY`
+- `PUBLIC_TURNSTILE_SITE_KEY`
+- `WEB3FORMS_ACCESS_KEY`
+- `CF_ACCESS_TEAM_NAME`
+- `CF_ACCESS_AUD`
+- `DEV_PORTAL_EMAIL` (optional, localhost-only dev bypass)
+
+A starter file is included at `.dev.vars.example`.
+
+Contact form notes:
+
+- `PUBLIC_TURNSTILE_SITE_KEY` is the browser/site key rendered on the contact page.
+- `TURNSTILE_SECRET_KEY` must be the matching secret for that same Turnstile widget.
+
+## D1 setup
+
+1. Create a D1 database:
+
+```bash
+npx wrangler d1 create foundationalmile-portal
+```
+
+2. Copy the returned database ID into `wrangler.jsonc` under `d1_databases[0].database_id`.
+
+3. Apply the schema migration:
+
+```bash
+npx wrangler d1 migrations apply DB --local
+npx wrangler d1 migrations apply DB --remote
+```
+
+4. Optional local seed data:
+
+```bash
+npx wrangler d1 execute DB --local --file seeds/portal.dev.sql
+```
+
+## Cloudflare Access expectations
+
+Create a Cloudflare Access application that protects:
+
+- `/portal*`
+- `/api/portal*`
+
+Then set:
+
+- `CF_ACCESS_TEAM_NAME` to your team name
+- `CF_ACCESS_AUD` to that Access application's audience value
+
+The app verifies `Cf-Access-Jwt-Assertion` against Access JWKS (`/cdn-cgi/access/certs`) and trusts only verified email from the JWT.
+
+## Local development workflow
+
+For public-page-only iteration you can still use:
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:4321](http://localhost:4321).
+For portal testing (auth + D1 + Worker runtime):
 
-## Build for production
+1. Create `.dev.vars` from `.dev.vars.example`.
+2. Build once:
 
 ```bash
 npm run build
 ```
 
-Output is in `dist/`. Deploy that folder to Cloudflare Pages (connect the repo or upload the `dist` directory).
-
-## SEO checks
-
-Before deploys, validate that `public/sitemap.xml` still matches `src/pages`:
+3. Run Worker locally:
 
 ```bash
+npx wrangler dev --local --persist-to .wrangler/state
+```
+
+4. Visit `http://127.0.0.1:8787/portal`.
+
+Note: `DEV_PORTAL_EMAIL` bypass is only honored for localhost hostnames and is ignored for non-local hosts.
+
+## Build
+
+```bash
+npm run build
+```
+
+## Checks
+
+```bash
+npm run check
+npm run lint
 npm run check:sitemap
 ```
 
-## Security checks
+## Deploy
 
-- CI fails on `npm audit --audit-level=high` (high/critical must be zero).
-- Moderate vulnerabilities are tracked and remediated during regular dependency updates unless policy changes.
-
-## Deploy to Cloudflare Pages (GitHub → auto deploy)
-
-**1. Push the project to GitHub**
-
-From the project folder:
-
-```bash
-cd /Users/brianamartin/Documents/Games/foundationalmile_site
-git add .
-git commit -m "Initial site"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-git push -u origin main
-```
-
-(Create the repo on [github.com/new](https://github.com/new) first if needed — no need to add a README if this project already has one.)
-
-**2. Connect the repo to Cloudflare Pages**
-
-1. Log in at [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages**.
-2. Click **Create** → **Pages** → **Connect to Git**.
-3. Choose **GitHub** and authorize Cloudflare if prompted.
-4. Select your **repository** and **branch** (e.g. `main`).
-
-**3. Set the build settings**
-
-Use these values (Cloudflare will run the build on every push):
-
-| Field | Value |
-|-------|--------|
-| **Framework preset** | Astro (or “None”) |
-| **Build command** | `npm run build` |
-| **Build output directory** | `dist` |
-
-Click **Save and Deploy**. Later pushes to `main` will trigger new builds automatically.
-
-You’ll get a URL like `https://your-project.pages.dev`. To use a custom domain, go to **Custom domains** in the project and add it.
-
-## Contact form
-
-The contact form uses **Netlify Forms** syntax as a placeholder (`data-netlify="true"`, hidden `form-name` input). When deploying to Cloudflare Pages, replace with:
-
-- A [Cloudflare Worker](https://workers.cloudflare.com/) that forwards submissions to your email or CRM, or
-- [Formspree](https://formspree.io/) (or similar) by updating the form `action` and removing the Netlify attributes.
-
-## Tech stack
-
-- **Astro** — static site generator
-- **Tailwind CSS** — styling via `@astrojs/tailwind`
-- No external UI libraries; single `src/pages/index.astro` plus config files
+Deploy with Cloudflare Pages/Workers using this repo and ensure all runtime vars + D1 binding are configured in the target environment.
