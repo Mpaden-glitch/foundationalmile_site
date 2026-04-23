@@ -1,0 +1,133 @@
+---
+import PortalLayout from '../../../../../layouts/PortalLayout.astro';
+import { assertRequesterRole, assertSiteAccess, requirePortalAuth } from '../../../../../lib/portal/auth';
+import { getPortalRuntime } from '../../../../../lib/portal/runtime';
+import { requireSiteId } from '../../../../../lib/portal/validation';
+
+export const prerender = false;
+
+function toPortalErrorResponse(error: unknown): Response {
+  const status =
+    typeof error === 'object' &&
+    error !== null &&
+    'status' in error &&
+    typeof (error as { status?: unknown }).status === 'number'
+      ? (error as { status: number }).status
+      : 500;
+
+  return new Response(status === 401 ? 'Unauthorized.' : status === 403 ? 'Forbidden.' : 'Internal server error.', { status });
+}
+
+let auth!: Awaited<ReturnType<typeof requirePortalAuth>>;
+let siteId = '';
+let authError: unknown = null;
+
+try {
+  const { env, db } = getPortalRuntime(Astro.locals as App.Locals);
+  auth = await requirePortalAuth(Astro.request, env, db);
+  siteId = requireSiteId(Astro.params.site_id);
+  assertRequesterRole(assertSiteAccess(siteId, auth));
+} catch (error) {
+  authError = error;
+}
+
+if (authError) {
+  return toPortalErrorResponse(authError);
+}
+
+const site = auth.authorizedSites.find((candidate) => candidate.id === siteId);
+if (!site) {
+  return new Response('Forbidden.', { status: 403 });
+}
+
+const createRequestApiPath = `/api/portal/sites/${siteId}/requests`;
+const requestsPath = `/portal/sites/${siteId}/requests`;
+---
+<PortalLayout title={`New Request · ${site.displayName}`} userEmail={auth.user.email}>
+  <section class="rounded-xl border border-slate-800 bg-slate-900/60 p-8">
+    <p class="text-sm font-mono text-slate-400 uppercase tracking-wider">New Request</p>
+    <h1 class="text-2xl md:text-3xl font-semibold text-slate-100 mt-2">{site.displayName}</h1>
+    <p class="text-slate-400 mt-2">{site.domain}</p>
+  </section>
+
+  <section class="mt-8 rounded-xl border border-slate-800 bg-slate-900/40 p-8">
+    <form method="POST" action={createRequestApiPath} data-redirect={requestsPath} id="new-request-form" class="space-y-6">
+      <div>
+        <label for="title" class="block text-sm font-medium text-slate-300 mb-2">Title</label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          required
+          maxlength="200"
+          class="w-full px-4 py-3 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          placeholder="Brief summary of your request"
+        />
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium text-slate-300 mb-2">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="8"
+          required
+          maxlength="5000"
+          class="w-full px-4 py-3 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-y"
+          placeholder="Describe what you need, any context, and expected outcomes."
+        ></textarea>
+      </div>
+
+      <p id="request-error" class="hidden text-sm text-red-300"></p>
+
+      <div class="flex flex-wrap gap-3">
+        <button
+          type="submit"
+          class="inline-flex items-center px-5 py-3 rounded-md bg-accent text-brand-navy font-medium hover:bg-accent-light transition-colors"
+        >
+          Submit Request
+        </button>
+        <a
+          href={`/portal/sites/${site.id}/requests`}
+          class="inline-flex items-center px-5 py-3 rounded-md border border-slate-600 text-slate-200 hover:border-slate-400 hover:text-white transition-colors"
+        >
+          Cancel
+        </a>
+      </div>
+    </form>
+  </section>
+
+  <script>
+    const form = document.getElementById('new-request-form');
+    const errorEl = document.getElementById('request-error');
+
+    if (form instanceof HTMLFormElement && errorEl instanceof HTMLParagraphElement) {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+          });
+
+          const payload = await response.json().catch(() => null);
+          if (response.ok) {
+            const redirectPath = form.dataset.redirect ?? '/portal';
+            window.location.assign(redirectPath);
+            return;
+          }
+
+          const message = payload?.error?.message ?? 'Unable to create request.';
+          errorEl.textContent = message;
+          errorEl.classList.remove('hidden');
+        } catch {
+          errorEl.textContent = 'Unable to create request.';
+          errorEl.classList.remove('hidden');
+        }
+      });
+    }
+  </script>
+</PortalLayout>

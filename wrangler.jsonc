@@ -13,5 +13,17 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "dist"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "login_portal",
+      "database_id": "ebaedc91-fa20-48d0-a736-dd288655bd9b",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "CF_ACCESS_TEAM_NAME": "REPLACE_WITH_CF_ACCESS_TEAM_NAME",
+    "CF_ACCESS_AUD": "REPLACE_WITH_CF_ACCESS_AUD"
   }
 }

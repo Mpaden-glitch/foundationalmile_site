@@ -4,6 +4,8 @@
  * Astro + Tailwind CSS. Deploy to Cloudflare Pages.
  */
 export const prerender = true;
+const turnstileSiteKey =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY?.trim() || '0x4AAAAAACrZpj7N7dorzKW0';
 ---
 <!doctype html>
 <html lang="en">
@@ -160,7 +162,7 @@ export const prerender = true;
                   placeholder="Tell us what is going on. What are you trying to accomplish, what is getting in the way, and what kind of help you think you need — even if you are not sure yet."
                 />
               </div>
-              <div class="cf-turnstile" data-sitekey="0x4AAAAAACrZpj7N7dorzKW0" data-theme="dark"></div>
+              <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
               <button
                 type="submit"
                 id="submit-btn"
